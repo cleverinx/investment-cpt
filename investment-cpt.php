@@ -5,6 +5,7 @@ Description: Custom post type and taxonomy for managing investments.
 Version: 1.0
 */
 
+// Register Custom Post Type for Investments
 function create_investment_post_type() {
     $labels = array(
         'name' => 'Investments',
@@ -24,6 +25,7 @@ function create_investment_post_type() {
 
 add_action('init', 'create_investment_post_type');
 
+// Register Custom Taxonomy for Investments
 function create_investment_taxonomy() {
     $labels = array(
         'name' => 'Investment Categories',
@@ -41,6 +43,7 @@ function create_investment_taxonomy() {
 
 add_action('init', 'create_investment_taxonomy');
 
+// Add custom meta boxes for logo and repeatable text fields
 function add_investment_custom_meta_boxes() {
     add_meta_box(
         'investment_logo_meta_box',
@@ -62,29 +65,28 @@ function add_investment_custom_meta_boxes() {
 }
 
 add_action('add_meta_boxes', 'add_investment_custom_meta_boxes');
+
+// Render image upload and preview for investment logo
 function render_investment_logo_meta_box($post) {
 
     $image_url = get_post_meta($post->ID, 'investment_logo', true);
     ?>
-    <p>
+    <div>
         <label for="investment_logo">Upload Investment Logo:</label>
-        <input type="text" name="investment_logo" id="investment_logo" class="widefat" \
+        <input type="text" name="investment_logo" id="investment_logo" class="widefat"
                value="<?php echo esc_url($image_url); ?>"/>
         <input type="button" id="upload_logo_button" class="button" value="Upload Logo"/>
 
-
-        <?php if ($image_url) { ?>
-    <div id="investment_logo_preview">
-        <?php
-        $image_id = attachment_url_to_postid($image_url);
-
-        echo '<img src="' . wp_get_attachment_image_src($image_id, 'thumbnail')[0] . '"\
-                 class="investment-logo-preview" style="max-width:100px;" alt="Investment Image" />';
-        ?>
+        <div id="investment_logo_preview">
+                <?php if ($image_url): ?>
+                <?php
+                $image_id = attachment_url_to_postid($image_url);
+                echo '<img src="' . wp_get_attachment_image_src($image_id, 'thumbnail')[0] . '"\
+                         class="investment-logo-preview" style="max-width:100px;" alt="Investment Image" />';
+                ?>
+                <?php endif; ?>
+        </div>
     </div>
-<?php } ?>
-
-    </p>
 
     <script>
         jQuery(document).ready(function ($) {
@@ -92,7 +94,8 @@ function render_investment_logo_meta_box($post) {
             // if #investment_logo changes, update preview
             $('#investment_logo').change(function () {
                 const image_url = $(this).val();
-                $('.investment-logo-preview').attr('src', image_url);
+            $("#investment_logo_preview").html('<img src="' + image_url + '" class="investment-logo-preview" ' +
+                'style="max-width:100px;" alt="Investment Image" />');
             });
 
             $('#upload_logo_button').click(function () {
@@ -109,9 +112,8 @@ function render_investment_logo_meta_box($post) {
                     // update #investment_logo url value
                     $('#investment_logo').val(attachment.url);
                     // update preview
-                    $('.investment-logo-preview').attr('src', attachment.url);
-
-
+                   $("#investment_logo_preview").html('<img src="' + attachment.url + '"' +
+                       ' class="investment-logo-preview" style="max-width:100px;" alt="Investment Image" />');
                 });
 
                 custom_uploader.open();
@@ -121,10 +123,12 @@ function render_investment_logo_meta_box($post) {
     <?php
 }
 
+// Render repeatable text fields for investment text
 function render_investment_text_meta_box() {
-    // output form fields with values
+    // output form fields
 }
 
+// Save investment custom fields
 function save_investment_custom_fields($post_id) {
     // Save investment logo
     if (isset($_POST['investment_logo'])) {
