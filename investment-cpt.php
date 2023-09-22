@@ -8,3 +8,32 @@ Version: 1.0
 require_once plugin_dir_path(__FILE__) . 'includes/custom-post-types.php';
 require_once plugin_dir_path(__FILE__) . 'includes/custom-fields.php';
 
+function investment_block_assets() {
+    wp_enqueue_script(
+        'investment-block-script',
+        plugin_dir_url(__FILE__) . 'investment-block/build/index.js',
+        array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-api', 'wp-i18n'),
+        filemtime(plugin_dir_path(__FILE__) . 'investment-block/build/index.js')
+    );
+
+    wp_enqueue_style(
+        'investment-block-style',
+        plugin_dir_url(__FILE__) . 'investment-block/build/style.css',
+        array(),
+        filemtime(plugin_dir_path(__FILE__) . 'investment-block/build/style.css')
+    );
+}
+
+add_action('enqueue_block_editor_assets', 'investment_block_assets');
+
+
+function investment_block_investment_block_block_init() {
+	register_block_type( __DIR__ . '/investment-block/build' ,
+	  array(
+            'editor_script' => 'investment-block-script',
+            'editor_style'  => 'investment-block-style',
+        ));
+}
+add_action( 'init', 'investment_block_investment_block_block_init' );
+
+
