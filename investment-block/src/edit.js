@@ -4,6 +4,11 @@
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
  */
 import { __ } from '@wordpress/i18n';
+import { useEffect, useState } from '@wordpress/element';
+const  {SelectControl, PanelBody, PanelRow} = wp.components;
+const { serverSideRender: ServerSideRender } = wp;
+
+
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -11,7 +16,7 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -29,13 +34,51 @@ import './editor.scss';
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit() {
-	return (
-		<p {...useBlockProps()}>
-			{__(
-				'Investment Block – hello from the editor!',
-				'investment-block'
-			)}
-		</p>
-	);
+export default function Edit(props) {
+    const { attributes, setAttributes } = props;
+    const [categories, setCategories] = useState([]);
+
+    // Fetch the categories from the 'investment-category' taxonomy
+    useEffect(() => {
+        wp.apiFetch({
+            path: '/wp/v2/investment-category', // Use the correct REST API path
+        })
+        .then((response) => {
+            setCategories(response);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }, []);
+
+    const handleCategoryChange = (selected) => {
+        setAttributes({ selectedCategories: selected });
+    };
+
+    const blockProps = useBlockProps();
+	console.log("Attributes before rendering:", attributes);
+    return (
+        <div {...blockProps}>
+            <InspectorControls>
+                <PanelBody title={__('Posts Settings')}>
+                    <PanelRow>
+                        <SelectControl
+                            label={__('Categories:')}
+                            multiple
+                            value={attributes.selectedCategories}
+                            options={categories.map((category) => ({
+                                label: category.name,
+                                value: category.id,
+                            }))}
+                            onChange={handleCategoryChange}
+                        />
+                    </PanelRow>
+
+                </PanelBody>
+            </InspectorControls>
+
+            <ServerSideRender block="investment-block/investment-block" attributes={attributes.selectedCategories} />
+        </div>
+    );
 }
+

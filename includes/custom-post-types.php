@@ -31,9 +31,10 @@ function create_investment_taxonomy() {
         'labels' => $labels,
         'hierarchical' => true,
         'rewrite' => array('slug' => 'investment-category'),
+	    'show_in_rest' => true,
     );
 
-    register_taxonomy('investment_category', 'investment', $args);
+    register_taxonomy('investment-category', 'investment', $args);
 }
 
 add_action('init', 'create_investment_taxonomy');

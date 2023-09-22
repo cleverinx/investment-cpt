@@ -18,9 +18,9 @@ function investment_block_assets() {
 
     wp_enqueue_style(
         'investment-block-style',
-        plugin_dir_url(__FILE__) . 'investment-block/build/style.css',
+        plugin_dir_url(__FILE__) . 'investment-block/build/index.css',
         array(),
-        filemtime(plugin_dir_path(__FILE__) . 'investment-block/build/style.css')
+        filemtime(plugin_dir_path(__FILE__) . 'investment-block/build/index.css')
     );
 }
 

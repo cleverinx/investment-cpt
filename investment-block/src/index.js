@@ -3,7 +3,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-import { registerBlockType } from '@wordpress/blocks';
+import {registerBlockType} from '@wordpress/blocks';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -29,5 +29,15 @@ registerBlockType(metadata.name, {
 	/**
 	 * @see ./edit.js
 	 */
+	attributes: {
+		selectedCategories: {
+			type: 'array',
+			default: [],
+		},
+	},
 	edit: Edit,
+	save: function () {
+		return null; // We're not saving anything here, the selected categories will be saved in attributes
+	}
+
 });
