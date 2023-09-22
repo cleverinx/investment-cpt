@@ -124,8 +124,47 @@ function render_investment_logo_meta_box($post) {
 }
 
 // Render repeatable text fields for investment text
-function render_investment_text_meta_box() {
-    // output form fields
+function render_investment_text_meta_box($post) {
+ $text_values = get_post_meta($post->ID, 'investment_text', true);
+ // if $text_values is not an array, set it to an array with an empty string for the first item
+
+ if (!is_array($text_values)) {
+        $text_values = array('');
+    }
+
+    ?>
+    <div id="investment_text_fields">
+        <?php
+        // render existing text fields with values
+        foreach ($text_values as $index => $text) {
+            ?>
+            <p>
+                <label for="investment_text_<?php echo $index; ?>">Text:</label>
+                <input type="text" name="investment_text[]" id="investment_text_<?php echo $index; ?>"
+                       class="widefat" value="<?php echo esc_attr($text); ?>" />
+            </p>
+            <?php
+        }
+        ?>
+    </div>
+    <p>
+        <input type="button" id="add_investment_text_field" class="button" value="Add Text Field" />
+    </p>
+
+    <script>
+        jQuery(document).ready(function ($) {
+            $('#add_investment_text_field').click(function () {
+                // add new text field to #investment_text_fields with counter as index
+                $('#investment_text_fields').append('<p><label for="investment_text_' + investment_text_counter
+                    + '">Text:</label> <input type="text" name="investment_text[]" id="investment_text_' +
+                    investment_text_counter + '" class="widefat" /></p>');
+                investment_text_counter++;
+            });
+
+            let investment_text_counter = <?php echo count($text_values); ?>;
+        });
+    </script>
+    <?php
 }
 
 // Save investment custom fields
@@ -136,6 +175,13 @@ function save_investment_custom_fields($post_id) {
     }
 
     // Save investment text
+     if (isset($_POST['investment_text'])) {
+        $text_values = array_map('sanitize_text_field', $_POST['investment_text']);
+        // if array has empty values, remove them
+        $text_values = array_filter($text_values);
+        // save investment text as array of strings in post meta
+        update_post_meta($post_id, 'investment_text', $text_values);
+    }
 
 }
 
