@@ -29,9 +29,16 @@ add_action('enqueue_block_editor_assets', 'investment_block_assets');
 
 function investment_block_investment_block_block_init() {
 	register_block_type( __DIR__ . '/investment-block/build' ,
+
 	  array(
             'editor_script' => 'investment-block-script',
             'editor_style'  => 'investment-block-style',
+		  'attributes' => [
+		'selectedCategories' => [
+			'default' => '[]',
+			'type'    => 'array'
+		],
+	],
         ));
 }
 add_action( 'init', 'investment_block_investment_block_block_init' );

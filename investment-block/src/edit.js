@@ -56,7 +56,7 @@ export default function Edit(props) {
     };
 
     const blockProps = useBlockProps();
-	console.log("Attributes before rendering:", attributes);
+	console.log("Attributes before rendering:", attributes.selectedCategories);
     return (
         <div {...blockProps}>
             <InspectorControls>
