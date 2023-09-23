@@ -6,7 +6,57 @@
  */
 
 .wp-block-investment-block-investment-block {
-	background-color: #21759b;
-	color: #fff;
-	padding: 2px;
+	max-width: unset;
+
+}
+
+.investment-block__wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+
+	.investment-toggle__wrapper {
+		width: 25%;
+	}
+
+	.investment-categories__wrapper {
+		width: 75%;
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+
+}
+
+
+.investment-categories__wrapper .investment-category__wrapper {
+	//hide every child except the first one
+	&:nth-child(n+2) {
+		display: none;
+	}
+
+	&.show {
+		display: flex;
+	}
+}
+
+
+.investment-category__wrapper {
+	width: 100%;
+	display: flex;
+}
+
+.investment__card {
+	width: 25%;
+
+}
+
+.investment__card__image__wrapper {
+	position: relative;
+
+	.investment__card__image {
+		width: 100%;
+height:150px;
+		object-fit: contain;
+	}
 }

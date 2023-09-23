@@ -35,6 +35,9 @@ registerBlockType(metadata.name, {
 			default: [],
 		},
 	},
+supports: {
+    align: true
+},
 	edit: Edit,
 	save: function () {
 		return null; // We're not saving anything here, the selected categories will be saved in attributes

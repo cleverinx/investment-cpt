@@ -38,8 +38,12 @@ function investment_block_investment_block_block_init() {
 			'default' => '[]',
 			'type'    => 'array'
 		],
-	],
-        ));
+		  ],
+		  'supports' => [
+			  'align' => true
+			  ],
+	  )
+        );
 }
 add_action( 'init', 'investment_block_investment_block_block_init' );
 

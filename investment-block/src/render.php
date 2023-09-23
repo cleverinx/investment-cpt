@@ -2,9 +2,10 @@
 /**
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
-
+print_r($attributes);
 ?>
-<div <?php echo get_block_wrapper_attributes(); ?>>
+
+<section <?php echo get_block_wrapper_attributes(); ?>>
 	<!--if attributes are being passed -->
 
 	<?php
@@ -16,17 +17,17 @@
 			$categories = array();
 			?>
 			<div class="investment-block__wrapper">
-				<div class="investment-block__categories">
+				<div class="investment-toggle__wrapper">
 					<?php foreach ( $attributes['selectedCategories'] as $category ) : ?>
 						<?php $category = get_term( $category, 'investment-category' ); ?>
 
 						<?php $categories[] = $category ?>
 
-						<a data-target="#investment-<?php echo $category->slug; ?>"><?php echo $category->name; ?></a>
+						<a class="toggle-investment" data-target="#investment-<?php echo $category->slug; ?>"><?php echo $category->name; ?></a>
 					<?php endforeach; ?>
 				</div>
 
-
+<div class="investment-categories__wrapper">
 				<?php foreach ( $categories as $category ) : ?>
 					<div class="investment-category__wrapper" id="investment-<?php echo $category->slug; ?>">
 
@@ -50,9 +51,11 @@
 							<?php $alt = get_post_meta( attachment_url_to_postid( $logo ), '_wp_attachment_image_alt', true ); ?>
 
 							<?php $text = get_post_meta( $post->ID, 'investment_text', true ); ?>
-
+						<div class="investment__card">
 							<?php if ( ! empty( $logo ) ) : ?>
-								<img src="<?php echo esc_url( $logo ); ?>" alt="<?php echo $alt; ?>"/>
+							<div class="investment__card__image__wrapper">
+								<img src="<?php echo esc_url( $logo ); ?>" alt="<?php echo $alt; ?>" class="investment__card__image"/>
+								</div>
 							<?php endif; ?>
 							<!-- loop through array of text items and output-->
 							<?php if ( ! empty( $text ) ) : ?>
@@ -65,14 +68,16 @@
 								<?php endforeach; ?>
 							<?php endif; ?>
 							</ul>
+							</div>
 						<?php endforeach; ?>
 					</div>
 				<?php endforeach; ?>
+	</div>
 			</div>
 
 		<?php endif;
  ?>
 
-</div>
+</section>
 
 

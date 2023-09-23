@@ -56,7 +56,7 @@ export default function Edit(props) {
     };
 
     const blockProps = useBlockProps();
-	console.log("Attributes before rendering:", attributes.selectedCategories);
+	console.log("Attributes before rendering:", attributes);
     return (
         <div {...blockProps}>
             <InspectorControls>
@@ -77,7 +77,7 @@ export default function Edit(props) {
                 </PanelBody>
             </InspectorControls>
 
-            <ServerSideRender block="investment-block/investment-block" attributes={attributes.selectedCategories} />
+            <ServerSideRender block="investment-block/investment-block" attributes={attributes}  />
         </div>
     );
 }

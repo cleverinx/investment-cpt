@@ -83,7 +83,7 @@ function Edit(props) {
     });
   };
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)();
-  console.log("Attributes before rendering:", attributes.selectedCategories);
+  console.log("Attributes before rendering:", attributes);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...blockProps
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(PanelBody, {
@@ -99,7 +99,7 @@ function Edit(props) {
     onChange: handleCategoryChange
   })))), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(ServerSideRender, {
     block: "investment-block/investment-block",
-    attributes: attributes.selectedCategories
+    attributes: attributes
   }));
 }
 
@@ -153,6 +153,9 @@ __webpack_require__.r(__webpack_exports__);
       type: 'array',
       default: []
     }
+  },
+  supports: {
+    align: true
   },
   edit: _edit__WEBPACK_IMPORTED_MODULE_2__["default"],
   save: function () {

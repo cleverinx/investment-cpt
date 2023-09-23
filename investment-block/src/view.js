@@ -19,6 +19,32 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-metadata/#view-script
  */
+document.addEventListener("DOMContentLoaded", function () {
+    // Get all toggle links and category wrappers
+    const toggleLinks = document.querySelectorAll(".toggle-investment");
+    const categoryWrappers = document.querySelectorAll(".investment-category__wrapper");
+
+    // Add click event listeners to toggle links
+    toggleLinks.forEach(link => {
+        link.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            // Get the target ID from the data-target attribute
+            const targetId = link.getAttribute("data-target");
+
+            // Hide all category wrappers
+            categoryWrappers.forEach(wrapper => {
+                wrapper.style.display = "none";
+            });
+
+            // Show the target category wrapper
+            const targetWrapper = document.querySelector(targetId);
+            if (targetWrapper) {
+                targetWrapper.style.display = "block";
+            }
+        });
+    });
+});
 
 /* eslint-disable no-console */
 console.log('Hello World! (from investment-block-investment-block block)');
