@@ -69,6 +69,11 @@
   border-bottom: 1px solid #2c7e83;
   text-decoration: none;
 }
+.investment-toggle__wrapper .toggle-investment:hover {
+  color: #020202;
+  border-color: var(--wp--preset--color--secondary);
+  cursor: pointer;
+}
 
 .investment-categories__wrapper .investment-category__wrapper {
   width: 100%;
