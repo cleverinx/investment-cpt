@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // Show the target category wrapper
       const targetWrapper = document.querySelector(targetId);
       if (targetWrapper) {
-        targetWrapper.style.display = "block";
+        targetWrapper.style.display = "flex";
       }
     });
   });
